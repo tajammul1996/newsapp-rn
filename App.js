@@ -16,12 +16,12 @@ export default function App() {
   }, [])
 
   const renderList = () => {
-    console.log(articles);
     if (articles.length > 0) {
       return (
         <FlatList
           data={articles}
-          renderItem={({ item }) => <NewsCard data={item} key={item.publishedAt} />}
+          renderItem={({ item }) => <NewsCard data={item} />}
+          keyExtractor={(item, index) => item.publishedAt}
           initialNumToRender={5}
         />
       )
