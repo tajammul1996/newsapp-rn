@@ -2,8 +2,9 @@ import React from "react";
 import { ImageBackground, Text, View, TouchableOpacity, StyleSheet } from "react-native";
 
 const NewsCard = (props) => {
+    console.log(props);
     return (
-        <TouchableOpacity style={Styles.container}>
+        <TouchableOpacity style={Styles.container} onPress={() => props.navigation.navigate("NewsDescription")}>
             <ImageBackground source={{ uri: props.data.urlToImage }} style={Styles.background} imageStyle={{ borderRadius: 10 }}>
                 <Text style={Styles.source}>{props.data.source.name}</Text>
                 <Text style={Styles.title}>{props.data.title}</Text>

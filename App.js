@@ -1,45 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { Text, View, SafeAreaView, StyleSheet, Platform, FlatList, ActivityIndicator } from 'react-native';
-import NewsCard from "./src/components/NewsCard";
+import React from "react";
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
 
-export default function App() {
-  const [articles, setArticles] = useState([])
+import Dashboard from "./src/components/Dashboard";
+import NewsDesc from "./src/components/NewsDesc";
 
-  const fetchData = async () => {
-    const response = await fetch("http://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=242d96e64f34477ca3077bed18b69ddd");
-    const data = await response.json();
-    setArticles(data.articles);
-  }
+const Stack = createStackNavigator();
 
-  useEffect(() => {
-    fetchData();
-  }, [])
-
-  const renderList = () => {
-    if (articles.length > 0) {
-      return (
-        <FlatList
-          data={articles}
-          renderItem={({ item }) => <NewsCard data={item} />}
-          keyExtractor={(item, index) => item.publishedAt}
-          initialNumToRender={5}
-        />
-      )
-    }
-    return <ActivityIndicator size="large" />
-  }
-
+function App() {
   return (
-    <SafeAreaView style={styles.safeAreaStyle}>
-      {renderList()}
-    </SafeAreaView>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Dashboard" component={Dashboard} />
+        <Stack.Screen name="NewsDescription" component={NewsDesc} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
-
-const styles = StyleSheet.create({
-  safeAreaStyle: {
-    flex: 1,
-    paddingTop: Platform.OS == "android" ? 25 : 0
-  }
-})
+export default App;
